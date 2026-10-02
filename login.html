@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>devTracker — Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="login-page">
+        <!-- Theme toggle -->
+        <button class="theme-toggle login-theme-toggle" id="theme-toggle" title="Toggle Light/Dark Mode">
+            <span class="toggle-icon" id="toggle-icon">☀️</span>
+        </button>
+
+        <!-- Brand -->
+        <div class="login-brand">
+            <span class="brand-icon">&lt;/&gt;</span>
+            <span class="brand-text">devTracker</span>
+        </div>
+        <p class="login-subtitle">Track your web dev journey</p>
+
+        <!-- Auth Card -->
+        <div class="auth-card">
+            <!-- Tabs -->
+            <div class="auth-tabs">
+                <button class="auth-tab active" id="tab-login">Log In</button>
+                <button class="auth-tab" id="tab-signup">Sign Up</button>
+            </div>
+
+            <!-- Error message -->
+            <div class="auth-error hidden" id="auth-error"></div>
+
+            <!-- Login Form -->
+            <div id="login-tab">
+                <form id="login-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Your password" required>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Log In</button>
+                </form>
+            </div>
+
+            <!-- Sign Up Form -->
+            <div id="signup-tab" class="hidden">
+                <form id="signup-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="signup-name">Display Name</label>
+                        <input type="text" id="signup-name" placeholder="What should we call you?" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" placeholder="you@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="Min 6 characters" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" placeholder="Type password again" required>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Create Account</button>
+                </form>
+            </div>
+
+            <!-- Divider -->
+            <div class="auth-divider">
+                <span>or</span>
+            </div>
+
+            <!-- Guest Button -->
+            <button class="btn-guest" id="guest-btn">
+                Continue as Guest →
+            </button>
+            <p class="guest-note">Guest mode won't save your progress</p>
+        </div>
+
+        <p class="login-footer">&lt;/&gt; Built to keep you consistent</p>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>

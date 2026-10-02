@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Progress Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span class="brand-icon">&lt;/&gt;</span>
+            <span class="brand-text">devTracker</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#hero" class="nav-link active">Home</a></li>
+            <li><a href="#log-section" class="nav-link">Log Session</a></li>
+            <li><a href="#stats-section" class="nav-link">Dashboard</a></li>
+            <li><a href="#heatmap-section" class="nav-link">Heatmap</a></li>
+            <li><a href="#history-section" class="nav-link">History</a></li>
+        </ul>
+
+        <div class="nav-status">
+            <span class="status-dot"></span>
+            <span class="status-text">Currently learning: <strong id="nav-current-topic">JavaScript</strong></span>
+        </div>
+
+        <div class="nav-right">
+            <div class="nav-user-chip" id="nav-user-chip">
+                <span class="nav-user-dot"></span>
+                <span class="nav-user" id="nav-user-info">Guest</span>
+            </div>
+            <button class="btn-logout hidden" id="logout-btn" onclick="handleLogout()">
+                <span>⏻</span> Logout
+            </button>
+        </div>
+
+        <button class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <!-- Floating Theme Toggle -->
+    <button class="theme-toggle floating-theme" id="theme-toggle" title="Toggle Light/Dark Mode">
+        <span class="toggle-icon" id="toggle-icon">☀️</span>
+    </button>
+
+    <!-- Guest Mode Banner -->
+    <div class="guest-banner hidden" id="guest-banner">
+        ⚠️ You're in guest mode — progress is saved only on this device. <a href="login.html">Create an account</a> to sync your data.
+    </div>
+    <div class="progress-status hidden" id="progress-status" role="status" aria-live="polite"></div>
+
+    <!-- 1. Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <p class="hero-tag">// your web dev journey, tracked</p>
+            <h1 class="hero-title">Stay consistent.<br>Stay <span class="highlight">on track.</span></h1>
+            <p class="hero-description">
+                Log your daily study sessions, watch your progress grow, and never lose sight of how far you've come.
+                devTracker keeps you accountable — because consistency is what turns beginners into developers.
+            </p>
+            <div class="hero-buttons">
+                <a href="#log-section" class="btn-hero-primary">Start Logging</a>
+                <a href="#stats-section" class="btn-hero-secondary">View Progress</a>
+            </div>
+        </div>
+
+        <div class="hero-terminal">
+            <div class="terminal-header">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot green"></span>
+                <span class="terminal-title">progress.log</span>
+            </div>
+            <div class="terminal-body">
+                <p><span class="t-green">&gt;</span> learning_path = "Web Development"</p>
+                <p><span class="t-green">&gt;</span> current_module = "<span id="terminal-topic">JavaScript</span>"</p>
+                <p><span class="t-green">&gt;</span> streak = <span class="t-green" id="terminal-streak">0 days</span></p>
+                <p><span class="t-green">&gt;</span> total_hours = <span class="t-green" id="terminal-hours">0</span></p>
+                <p><span class="t-green">&gt;</span> status: <span class="t-blink">consistent_</span></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. Motivational Quote -->
+    <section class="quote-banner" id="quote-banner">
+        <p class="quote-text" id="quote-text">"First, solve the problem. Then, write the code."</p>
+        <span class="quote-author" id="quote-author">— John Johnson</span>
+    </section>
+
+    <!-- 2. Daily Log Form -->
+    <section class="section log-section" id="log-section">
+        <h2 class="section-title"><span class="title-icon">&gt;_</span> Log a Study Session</h2>
+        <form id="study-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="topic">Topic</label>
+                    <select id="topic" required>
+                        <option value="" disabled selected>Select topic...</option>
+                        <option value="HTML">HTML</option>
+                        <option value="CSS">CSS</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="React">React</option>
+                        <option value="Node.js">Node.js</option>
+                        <option value="Git">Git</option>
+                        <option value="TypeScript">TypeScript</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="hours">Hours Spent</label>
+                    <input type="number" id="hours" min="0.5" max="24" step="0.5" placeholder="e.g. 2" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="notes">What did you learn?</label>
+                <textarea id="notes" rows="3" placeholder="Quick summary of what you covered..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary">+ Log Session</button>
+        </form>
+    </section>
+
+    <!-- 3. Stats Dashboard -->
+    <section class="section stats-section" id="stats-section">
+        <h2 class="section-title"><span class="title-icon">&gt;_</span> Dashboard</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-number" id="stat-total-hours">0</span>
+                <span class="stat-label">Total Hours</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="stat-total-sessions">0</span>
+                <span class="stat-label">Sessions</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="stat-avg-hours">0</span>
+                <span class="stat-label">Avg Hours/Day</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="stat-best-topic">—</span>
+                <span class="stat-label">Most Studied</span>
+            </div>
+            <!-- 4. Streak -->
+            <div class="stat-card streak-card">
+                <span class="stat-number" id="stat-streak">0</span>
+                <span class="stat-label">Day Streak <span id="streak-fire"></span></span>
+            </div>
+            <!-- 8. Level / XP -->
+            <div class="stat-card level-card">
+                <span class="stat-number" id="stat-level">Newbie</span>
+                <span class="stat-label"><span id="stat-xp">0</span> XP</span>
+                <div class="xp-bar-bg">
+                    <div class="xp-bar-fill" id="xp-bar-fill"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. Weekly Goal -->
+    <section class="section goal-section" id="goal-section">
+        <h2 class="section-title"><span class="title-icon">&gt;_</span> Weekly Goal</h2>
+        <div class="goal-container">
+            <div class="goal-setter">
+                <label for="weekly-goal-input">Target hours/week:</label>
+                <input type="number" id="weekly-goal-input" min="1" max="100" step="1" value="14">
+                <button class="btn-small" id="set-goal-btn">Set Goal</button>
+            </div>
+            <div class="goal-progress">
+                <div class="goal-info">
+                    <span><span id="goal-current">0</span> / <span id="goal-target">14</span> hrs this week</span>
+                    <span id="goal-percent">0%</span>
+                </div>
+                <div class="goal-bar-bg">
+                    <div class="goal-bar-fill" id="goal-bar-fill"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7. Progress Bar per Topic -->
+    <section class="section topics-section" id="topics-section">
+        <h2 class="section-title"><span class="title-icon">&gt;_</span> Time per Topic</h2>
+        <div id="topic-bars-container">
+            <p class="empty-state">No data yet. Log a session to see your topic breakdown.</p>
+        </div>
+    </section>
+
+    <!-- 5. GitHub-style Heatmap -->
+    <section class="section heatmap-section" id="heatmap-section">
+        <h2 class="section-title"><span class="title-icon">&gt;_</span> Contribution Heatmap</h2>
+        <div class="heatmap-wrapper">
+            <div class="heatmap-months" id="heatmap-months"></div>
+            <div class="heatmap-grid" id="heatmap-grid"></div>
+            <div class="heatmap-legend">
+                <span>Less</span>
+                <span class="heatmap-cell level-0"></span>
+                <span class="heatmap-cell level-1"></span>
+                <span class="heatmap-cell level-2"></span>
+                <span class="heatmap-cell level-3"></span>
+                <span class="heatmap-cell level-4"></span>
+                <span>More</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 10. Milestone Badges -->
+    <section class="section badges-section" id="badges-section">
+        <h2 class="section-title"><span class="title-icon">&gt;_</span> Badges & Milestones</h2>
+        <div class="badges-grid" id="badges-grid">
+            <!-- Filled by JS -->
+        </div>
+    </section>
+
+    <!-- Study History Table -->
+    <section class="section history-section" id="history-section">
+        <h2 class="section-title"><span class="title-icon">&gt;_</span> Study Log History</h2>
+        <div class="table-wrapper">
+            <table id="log-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Topic</th>
+                        <th>Hours</th>
+                        <th>Notes</th>
+                        <th>XP Earned</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="log-body">
+                </tbody>
+            </table>
+            <p class="empty-state" id="empty-msg">No study sessions logged yet. Start tracking above!</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&lt;/&gt; devTracker — built to keep you consistent. 💪</p>
+    </footer>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <script src="firebase-config.js"></script>
+    <script src="auth.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
